@@ -26,7 +26,7 @@ public class BaseClass {
     }
 
     public void launchApp() {
-        loadConfig();
+//        loadConfig();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().deleteAllCookies();
