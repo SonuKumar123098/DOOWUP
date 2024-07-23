@@ -29,11 +29,11 @@ public class IndexPage extends BaseClass {
         PageFactory.initElements(driver, this);
     }
 
-    public static void main(String[] args) {
-        new IndexPage().book3DDesignSession();
-    }
+//    public static void main(String[] args) {
+//        new IndexPage().book3DDesignSession();
+//    }
     public void book3DDesignSession() {
-        launchApp();
+//        launchApp();
         bookConsultation.click();
 //        driver.findElement(By.xpath("//div[@class='Header_button__Ey_Mn undefined']")).click();
         enterMobileNumber.sendKeys(properties.getProperty("mobile"));
@@ -42,9 +42,9 @@ public class IndexPage extends BaseClass {
         enterPincode.sendKeys(properties.getProperty("pincode"));
         bookConsultation.click();
     }
-    public void submitOTP(){
+    public BasicProfilePage submitOTP(){
         OTP.sendKeys(properties.getProperty("otp"));
         otpSubmitBtn.click();
-        return new
+        return new BasicProfilePage();
     }
 }
