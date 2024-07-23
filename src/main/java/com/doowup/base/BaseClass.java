@@ -1,5 +1,6 @@
 package com.doowup.base;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeClass;
@@ -13,6 +14,15 @@ public class BaseClass {
     public static WebDriver driver;
     public static Properties properties;
 
+    public static void launchApp() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().deleteAllCookies();
+        driver.get(properties.getProperty("url"));
+        driver.manage().window().maximize();
+    }
+
     @BeforeClass
     public void loadConfig() {
         try {
@@ -23,15 +33,6 @@ public class BaseClass {
         } catch (IOException e) {
             System.out.println("Error loading configuration file: " + e.getMessage());
         }
-    }
-
-    public void launchApp() {
-//        loadConfig();
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().deleteAllCookies();
-        driver.get(properties.getProperty("url"));
-        driver.manage().window().maximize();
     }
 
 }

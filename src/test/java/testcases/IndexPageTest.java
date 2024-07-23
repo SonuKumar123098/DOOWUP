@@ -12,8 +12,8 @@ public class IndexPageTest extends BaseClass {
 
     @BeforeMethod
     public void setUp() {
-        indexPage = new IndexPage();
         launchApp();
+        indexPage = new IndexPage();
     }
 
     @AfterMethod
@@ -24,7 +24,8 @@ public class IndexPageTest extends BaseClass {
     @Test
     public void book3DDesignSessionTest() throws InterruptedException {
         indexPage.book3DDesignSession();
+        indexPage.submitOTP();
         Thread.sleep(10000);
-        Assert.assertEquals(true,true);
+        Assert.assertEquals(true, true);
     }
 }
