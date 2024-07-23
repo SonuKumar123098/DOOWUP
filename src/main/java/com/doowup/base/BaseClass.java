@@ -3,6 +3,7 @@ package com.doowup.base;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 
 import java.io.FileReader;
@@ -13,6 +14,7 @@ import java.util.Properties;
 public class BaseClass {
     public static WebDriver driver;
     public static Properties properties;
+    public static WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 
     public static void launchApp() {
         WebDriverManager.chromedriver().setup();
