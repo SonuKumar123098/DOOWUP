@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BasicProfilePage extends BaseClass {
     @FindBy(xpath = "//p[normalize-space()='Apartment']")
@@ -24,16 +25,17 @@ public class BasicProfilePage extends BaseClass {
         PageFactory.initElements(driver, this);
     }
 
-    public void submitBasicProfileDetail(){
+    public void submitBasicProfileDetail() {
         selectApartment.click();
         googleInputField.sendKeys("ben");
-//        WebDriverWait wait = new WebDriverWait(driver, 10);
-        By autoSuggestionLocator = By.className("pac-item"); // Adjust this selector based on your specific auto-suggestion dropdown
-        wait.until(ExpectedConditions.visibilityOfElementLocated(autoSuggestionLocator));
-//        By autoSuggestionLocator = By.xpath("//ul[@class='pac-container pac-logo']/li/div[@class='pac-item']");
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(autoSuggestionLocator));
-        WebElement autoSuggestion = driver.findElement(autoSuggestionLocator);
-        autoSuggestion.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        By autoSuggestionLocator = By.xpath("//div[@class='pac-item']"); // Adjust this locator based on your specific auto-suggestion dropdown structure
+        wait.until(ExpectedConditions.presenceOfElementLocated(autoSuggestionLocator));
+        List<WebElement> autoSuggestions = driver.findElements(autoSuggestionLocator);
+        for (WebElement suggestion : autoSuggestions) {
+            suggestion.click();
+            break;
+        }
         floorplan.click();
         nextBtn.click();
     }
