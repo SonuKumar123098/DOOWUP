@@ -5,11 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-import java.util.List;
 
 public class BasicProfilePage extends BaseClass {
     @FindBy(xpath = "//p[normalize-space()='Apartment']")
@@ -20,22 +15,45 @@ public class BasicProfilePage extends BaseClass {
     WebElement floorplan;
     @FindBy(css = "div[id='nextAndBack_optionStep1'] button[class='BFC_flowSteps_button__QPlj9 BFC_flowSteps_nextStep__H99hJ']")
     WebElement nextBtn;
-
+    @FindBy(xpath = "//button[normalize-space()='Move In']")
+    WebElement selectPlan;
+    @FindBy(xpath = "//button[normalize-space()='End-to-end Interiors']")
+    WebElement selectChoice;
+    @FindBy(xpath = "//p[normalize-space()='Select Budget']")
+    WebElement budgetDropDownBtn;
+    @FindBy(id = "budgetDropValueStep_2")
+    WebElement selectBudget;
+    @FindBy(xpath = "//p[contains(@class,'BFC_flowSteps_button__QPlj9')]")
+    WebElement flowStepBtn;
+    @FindBy(id = "possession_month_dropdown_0")
+    WebElement selectFlow;
+    @FindBy(xpath = "//div[@id='nextAndBack_optionStep2']//button[@class='BFC_flowSteps_button__QPlj9 BFC_flowSteps_nextStep__H99hJ'][normalize-space()='Next']")
+    WebElement submitUsageBtn;
     public BasicProfilePage() {
         PageFactory.initElements(driver, this);
+    }
+
+    public void submitUsageDetail(){
+        selectPlan.click();
+        selectChoice.click();
+        budgetDropDownBtn.click();
+        selectBudget.click();
+        flowStepBtn.click();
+        selectFlow.click();
+        submitUsageBtn.click();
     }
 
     public void submitBasicProfileDetail() {
         selectApartment.click();
         googleInputField.sendKeys("ben");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-        By autoSuggestionLocator = By.xpath("//div[@class='pac-item']"); // Adjust this locator based on your specific auto-suggestion dropdown structure
-        wait.until(ExpectedConditions.presenceOfElementLocated(autoSuggestionLocator));
-        List<WebElement> autoSuggestions = driver.findElements(autoSuggestionLocator);
-        for (WebElement suggestion : autoSuggestions) {
-            suggestion.click();
-            break;
-        }
+        googleInputField.click();
+        WebElement location = driver.findElement(By.xpath("//div[@class='pac-container pac-logo']//div/span"));
+        location.click();
+//        List<WebElement> autoSuggestions = driver.findElements(By.xpath("//div[@class='pac-container pac-logo']//div"));
+//        for (WebElement suggestion : autoSuggestions) {
+//            suggestion.click();
+//            break;
+//        }
         floorplan.click();
         nextBtn.click();
     }

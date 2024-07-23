@@ -28,6 +28,7 @@ public class IndexPageTest extends BaseClass {
         indexPage.book3DDesignSession();
         basicProfilePage = indexPage.submitOTP();
         basicProfilePage.submitBasicProfileDetail();
+        basicProfilePage.submitUsageDetail();
         Thread.sleep(10000);
         Assert.assertEquals(true, true);
     }
