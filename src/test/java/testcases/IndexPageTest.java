@@ -29,7 +29,8 @@ public class IndexPageTest extends BaseClass {
         basicProfilePage = indexPage.submitOTP();
         basicProfilePage.submitBasicProfileDetail();
         basicProfilePage.submitUsageDetail();
-        Thread.sleep(10000);
+        basicProfilePage.selectDateAndTime(properties.getProperty("date"));
+        Thread.sleep(5000);
         Assert.assertEquals(true, true);
     }
 }
