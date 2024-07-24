@@ -17,7 +17,7 @@ public class BaseClass {
     public static void launchApp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
         driver.manage().deleteAllCookies();
         driver.get(properties.getProperty("url"));
         driver.manage().window().maximize();

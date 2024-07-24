@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -78,31 +79,83 @@ public class BasicProfilePage extends BaseClass {
         submitUsageBtn.click();
     }
 
+    public void submitdetail(){
+        try {
+            selectApartment.click();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("googleInputField")));
+
+            WebElement searchField = driver.findElement(By.id("googleInputField"));
+            searchField.clear(); // Clear existing text (if any)
+            searchField.sendKeys("Bengaluru, Karnataka, India");
+            searchField.click();
+
+            wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+            By autoSuggestionLocator = By.xpath("//div[@class='pac-item']");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(autoSuggestionLocator));
+
+            WebElement autoSuggestion = driver.findElement(autoSuggestionLocator);
+            autoSuggestion.click();
+
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            WebElement floorPlanOption = driver.findElement(By
+                    .xpath("//p[contains(text(),'My floorplan type is…')]"));
+            js.executeScript("arguments[0].scrollIntoView();", floorPlanOption);
+            floorplan.click();
+            nextBtn.click();
+            // Continue with further actions if needed
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void submitBasicProfileDetail() throws InterruptedException {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));//declaration
         selectApartment.click();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", googleInputField);
+        googleInputField.clear();
         googleInputField.sendKeys("ben");
-        js.executeScript("arguments[0].click()", googleInputField);
-//        By autoSuggestionLocator = By.xpath("//div[@class='pac-container pac-logo']//div[1]");
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(autoSuggestionLocator));
-//        WebElement autoSuggestion = driver.findElement(autoSuggestionLocator);
-//        Thread.sleep(500);
-//        autoSuggestion.click();
-//        WebElement location = myWait.until(ExpectedConditions.visibilityOfElementLocated(By
-//                .xpath("//div[@class='pac-container pac-logo']//div[1]")));
-//        List<WebElement> locations = driver.findElements(By.
-//                xpath("//div[@class='pac-container pac-logo']//div"));
-//        for (WebElement location : locations){
-//            location.click();
-//            break;
-//        }
-        googleInputField.click();
-        WebElement location = driver.findElement(By
-                .xpath("//div[@class='pac-container pac-logo']//div[1]"));
-        js.executeScript("arguments[0].click()", location);
+        Thread.sleep(2000);
+        driver.findElements(By
+                .xpath("//div[@class='pac-container pac-logo']//div//span//span")).get(1).click();
+        js.executeScript("arguments[0].scrollIntoView();", googleInputField);
         floorplan.click();
         nextBtn.click();
+    }
+
+    public void submitBasicProfileDetailWait() throws InterruptedException {
+        try {
+            selectApartment.click();
+
+            // Scroll to googleInputField
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].scrollIntoView();", googleInputField);
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Increased timeout to 20 seconds
+            wait.until(ExpectedConditions.elementToBeClickable(googleInputField));
+
+            googleInputField.clear();
+            googleInputField.sendKeys("Bengaluru, Karnataka, India");
+
+            System.out.println("Waiting for auto-suggestion element...");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='pac-item']")));
+
+            List<WebElement> suggestions = driver.findElements(By.xpath("//div[@class='pac-item']"));
+            if (!suggestions.isEmpty()) {
+                suggestions.get(0).click(); // Click on the first suggestion
+            } else {
+                System.out.println("No auto-suggestions found");
+            }
+
+            // Scroll to floorplan element and click
+            js.executeScript("arguments[0].scrollIntoView();", floorplan);
+            floorplan.click();
+
+            // Click nextBtn
+            nextBtn.click();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

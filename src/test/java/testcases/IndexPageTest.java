@@ -18,19 +18,19 @@ public class IndexPageTest extends BaseClass {
         indexPage = new IndexPage();
     }
 
-    @AfterMethod
-    public void tearDown() {
-        driver.quit();
-    }
-
     @Test
     public void book3DDesignSessionTest() throws InterruptedException {
         indexPage.book3DDesignSession();
         basicProfilePage = indexPage.submitOTP();
-        basicProfilePage.submitBasicProfileDetail();
+        basicProfilePage.submitBasicProfileDetailWait();
         basicProfilePage.submitUsageDetail();
         basicProfilePage.selectDateAndTime(properties.getProperty("date"));
         Thread.sleep(5000);
         Assert.assertEquals(true, true);
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
     }
 }
