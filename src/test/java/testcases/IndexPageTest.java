@@ -22,7 +22,7 @@ public class IndexPageTest extends BaseClass {
         try {
             indexPage.book3DDesignSession();
             basicProfilePage = indexPage.submitOTP();
-            basicProfilePage.submitBasicProfileDetailWait();
+            basicProfilePage.submitBasicProfileDetail();
             basicProfilePage.submitUsageDetail();
             basicProfilePage.selectDateAndTime(properties.getProperty("date"));
             Thread.sleep(30000);

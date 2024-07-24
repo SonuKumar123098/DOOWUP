@@ -50,10 +50,10 @@ public class BasicProfilePage extends BaseClass {
 
     public void selectDateAndTime(String date) {
         try {
-            Thread.sleep(1000);
-            By xpathLocator = By.xpath("//p[@class='BFC_flowSteps_selectedValue__rQT_P']");
-            WebElement nearestExperienceCenter = driver.findElement(xpathLocator);
-            nearestExperienceCenter.click();
+            Thread.sleep(5000);
+//            By xpathLocator = By.xpath("//p[@class='BFC_flowSteps_selectedValue__rQT_P']");
+//            WebElement nearestExperienceCenter = driver.findElement(xpathLocator);
+//            nearestExperienceCenter.click();
             selectNearestExperienceCenter.click();
 
             List<WebElement> allDates = driver.findElements(By.xpath("//div[@role='listbox']//div//div"));
@@ -91,54 +91,7 @@ public class BasicProfilePage extends BaseClass {
         }
     }
 
-    public void submitdetail() {
-        try {
-            selectApartment.click();
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("googleInputField")));
-
-            WebElement searchField = driver.findElement(By.id("googleInputField"));
-            searchField.clear(); // Clear existing text (if any)
-            searchField.sendKeys("Bengaluru, Karnataka, India");
-            searchField.click();
-
-            wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-            By autoSuggestionLocator = By.xpath("//div[@class='pac-item']");
-            wait.until(ExpectedConditions.visibilityOfElementLocated(autoSuggestionLocator));
-
-            WebElement autoSuggestion = driver.findElement(autoSuggestionLocator);
-            autoSuggestion.click();
-
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            WebElement floorPlanOption = driver.findElement(By
-                    .xpath("//p[contains(text(),'My floorplan type is…')]"));
-            js.executeScript("arguments[0].scrollIntoView();", floorPlanOption);
-            floorplan.click();
-            nextBtn.click();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void submitBasicProfileDetail() {
-        try {
-            selectApartment.click();
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].scrollIntoView();", googleInputField);
-            googleInputField.clear();
-            googleInputField.sendKeys("ben");
-            Thread.sleep(2000);
-            driver.findElements(By
-                    .xpath("//div[@class='pac-container pac-logo']//div//span//span")).get(1).click();
-            js.executeScript("arguments[0].scrollIntoView();", googleInputField);
-            floorplan.click();
-            nextBtn.click();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void submitBasicProfileDetailWait() {
         try {
             selectApartment.click();
 
