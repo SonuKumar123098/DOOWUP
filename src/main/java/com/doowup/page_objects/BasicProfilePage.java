@@ -5,6 +5,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class BasicProfilePage extends BaseClass {
     @FindBy(xpath = "//p[normalize-space()='Apartment']")
@@ -29,6 +33,7 @@ public class BasicProfilePage extends BaseClass {
     WebElement selectFlow;
     @FindBy(xpath = "//div[@id='nextAndBack_optionStep2']//button[@class='BFC_flowSteps_button__QPlj9 BFC_flowSteps_nextStep__H99hJ'][normalize-space()='Next']")
     WebElement submitUsageBtn;
+
     public BasicProfilePage() {
         PageFactory.initElements(driver, this);
     }
@@ -44,16 +49,14 @@ public class BasicProfilePage extends BaseClass {
     }
 
     public void submitBasicProfileDetail() {
+        WebDriverWait myWait = new WebDriverWait(driver, Duration.ofSeconds(50));//declaration
         selectApartment.click();
         googleInputField.sendKeys("ben");
         googleInputField.click();
+//        WebElement location = myWait.until(ExpectedConditions.visibilityOfElementLocated(By
+//                .xpath("//div[@class='pac-container pac-logo']//div/span")));
         WebElement location = driver.findElement(By.xpath("//div[@class='pac-container pac-logo']//div/span"));
         location.click();
-//        List<WebElement> autoSuggestions = driver.findElements(By.xpath("//div[@class='pac-container pac-logo']//div"));
-//        for (WebElement suggestion : autoSuggestions) {
-//            suggestion.click();
-//            break;
-//        }
         floorplan.click();
         nextBtn.click();
     }
